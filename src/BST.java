@@ -48,7 +48,28 @@ public class BST {
      */
     public boolean search(int val) {
         // TODO: Complete the search function
+        return helpSearch(this.root, val);
+    }
+
+    public boolean noChildren(BSTNode check) {
+        if (check.getLeft() == null && check.getRight() == null) {
+            return true;
+        }
         return false;
+    }
+    public boolean helpSearch(BSTNode root, int val) {
+        if (noChildren(root)) {
+            if(root.getVal() == val) {
+                return true;
+            }
+            return false;
+        }
+        if(root.getVal() < val) {
+            return helpSearch(root.getRight(), val);
+        }
+        else {
+            return helpSearch(root.getLeft(), val);
+        }
     }
 
     /**
