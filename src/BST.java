@@ -90,21 +90,13 @@ public class BST {
 
     public  void inHelper(BSTNode root, ArrayList<BSTNode> arr) {
         if (root.getLeft() == null) {
-            System.out.println(root);
             arr.add(root);
         }
-        if(root.getLeft() != null) {
+        else {
             inHelper(root.getLeft(), arr);
-        }
-        if(root.getRight() != null) {
+            arr.add(root);
             inHelper(root.getRight(), arr);
         }
-        else {
-
-        }
-
-
-
     }
 
     /**
@@ -112,7 +104,19 @@ public class BST {
      */
     public ArrayList<BSTNode> getPreorder() {
         // TODO: Complete preorder traversal
-        return null;
+        ArrayList<BSTNode> arr = new ArrayList<>();
+        preHelper(root, arr);
+        return arr;
+    }
+    public  void preHelper(BSTNode root, ArrayList<BSTNode> arr) {
+        if (noChildren(root)) {
+            arr.add(root);
+        }
+        else {
+            arr.add(root);
+            preHelper(root.getLeft(), arr);
+            preHelper(root.getRight(), arr);
+        }
     }
 
     /**
@@ -120,7 +124,20 @@ public class BST {
      */
     public ArrayList<BSTNode> getPostorder() {
         // TODO: Complete postorder traversal
-        return null;
+        ArrayList<BSTNode> arr = new ArrayList<>();
+        postHelper(root, arr);
+        return arr;
+    }
+
+    public  void postHelper(BSTNode root, ArrayList<BSTNode> arr) {
+        if (root.getLeft() == null) {
+            arr.add(root);
+        }
+        else {
+            postHelper(root.getLeft(), arr);
+            postHelper(root.getRight(), arr);
+            arr.add(root);
+        }
     }
 
     /**
@@ -154,9 +171,9 @@ public class BST {
         System.out.println("\nSearching for 22 in the tree");
         System.out.println(tree.search(22));
 
-//        System.out.println("\nPreorder traversal of binary tree is");
+        System.out.println("\nPreorder traversal of binary tree is");
         ArrayList<BSTNode> sol = tree.getPreorder();
-//        printNodes(sol);
+        printNodes(sol);
 
         System.out.println("\nInorder traversal of binary tree is");
         sol = tree.getInorder();
