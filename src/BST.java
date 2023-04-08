@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -57,17 +58,22 @@ public class BST {
         }
         return false;
     }
+
     public boolean helpSearch(BSTNode root, int val) {
-        if (noChildren(root)) {
-            if(root.getVal() == val) {
-                return true;
-            }
-            return false;
+        if (root.getVal() == val) {
+            return true;
         }
+
         if(root.getVal() < val) {
+            if(root.getRight() == null) {
+                return false;
+            }
             return helpSearch(root.getRight(), val);
         }
         else {
+            if(root.getLeft() == null) {
+                return false;
+            }
             return helpSearch(root.getLeft(), val);
         }
     }
@@ -76,8 +82,29 @@ public class BST {
      * @return ArrayList of BSTNodes in inorder
      */
     public ArrayList<BSTNode> getInorder() {
+        ArrayList<BSTNode> arr = new ArrayList<>();
         // TODO: Complete inorder traversal
-        return null;
+        inHelper(root, arr);
+        return arr;
+    }
+
+    public  void inHelper(BSTNode root, ArrayList<BSTNode> arr) {
+        if (root.getLeft() == null) {
+            System.out.println(root);
+            arr.add(root);
+        }
+        if(root.getLeft() != null) {
+            inHelper(root.getLeft(), arr);
+        }
+        if(root.getRight() != null) {
+            inHelper(root.getRight(), arr);
+        }
+        else {
+
+        }
+
+
+
     }
 
     /**
@@ -127,9 +154,9 @@ public class BST {
         System.out.println("\nSearching for 22 in the tree");
         System.out.println(tree.search(22));
 
-        System.out.println("\nPreorder traversal of binary tree is");
+//        System.out.println("\nPreorder traversal of binary tree is");
         ArrayList<BSTNode> sol = tree.getPreorder();
-        printNodes(sol);
+//        printNodes(sol);
 
         System.out.println("\nInorder traversal of binary tree is");
         sol = tree.getInorder();
