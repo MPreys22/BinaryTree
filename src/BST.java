@@ -95,7 +95,9 @@ public class BST {
         else {
             inHelper(root.getLeft(), arr);
             arr.add(root);
-            inHelper(root.getRight(), arr);
+            if(root.getRight() != null) {
+                inHelper(root.getRight(), arr);
+            }
         }
     }
 
@@ -114,8 +116,12 @@ public class BST {
         }
         else {
             arr.add(root);
-            preHelper(root.getLeft(), arr);
-            preHelper(root.getRight(), arr);
+            if(root.getLeft() != null) {
+                preHelper(root.getLeft(), arr);
+            }
+            if(root.getRight() != null) {
+                preHelper(root.getRight(), arr);
+            }
         }
     }
 
@@ -135,7 +141,9 @@ public class BST {
         }
         else {
             postHelper(root.getLeft(), arr);
-            postHelper(root.getRight(), arr);
+            if(root.getRight() != null) {
+                postHelper(root.getRight(), arr);
+            }
             arr.add(root);
         }
     }
@@ -148,6 +156,25 @@ public class BST {
      */
     public void insert(int val) {
         // TODO: Complete insert
+        insertHelp(val, root);
+    }
+
+    public void insertHelp(int val, BSTNode root) {
+        if (root.getVal() > val) {
+            if(root.getLeft() == null) {
+                root.setLeft(new BSTNode(val));
+                return;
+            }
+            insertHelp(val, root.getLeft());
+        }
+
+        if (root.getVal() < val) {
+            if (root.getRight() == null) {
+                root.setRight(new BSTNode(val));
+                return;
+            }
+            insertHelp(val, root.getRight());
+        }
     }
 
     /**
