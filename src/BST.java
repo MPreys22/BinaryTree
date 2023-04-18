@@ -48,18 +48,12 @@ public class BST {
      * @return true if val is in the tree, false otherwise
      */
     public boolean search(int val) {
-        // TODO: Complete the search function
         return helpSearch(this.root, val);
     }
 
-    public boolean noChildren(BSTNode check) {
-        if (check.getLeft() == null && check.getRight() == null) {
-            return true;
-        }
-        return false;
-    }
-
     public boolean helpSearch(BSTNode root, int val) {
+        // If the value is in the tree return true and otherwise check if value is greater or less than current root
+        // and go through the corresponding side.
         if (root.getVal() == val) {
             return true;
         }
@@ -83,21 +77,19 @@ public class BST {
      */
     public ArrayList<BSTNode> getInorder() {
         ArrayList<BSTNode> arr = new ArrayList<>();
-        // TODO: Complete inorder traversal
         inHelper(root, arr);
         return arr;
     }
 
     public  void inHelper(BSTNode root, ArrayList<BSTNode> arr) {
-        if (root.getLeft() == null) {
-            arr.add(root);
+        // If root is not null go left, root, right order of adding nodes
+        if (root == null) {
+            return;
         }
         else {
             inHelper(root.getLeft(), arr);
             arr.add(root);
-            if(root.getRight() != null) {
-                inHelper(root.getRight(), arr);
-            }
+            inHelper(root.getRight(), arr);
         }
     }
 
@@ -105,23 +97,19 @@ public class BST {
      * @return ArrayList of BSTNodes in preorder
      */
     public ArrayList<BSTNode> getPreorder() {
-        // TODO: Complete preorder traversal
         ArrayList<BSTNode> arr = new ArrayList<>();
         preHelper(root, arr);
         return arr;
     }
     public  void preHelper(BSTNode root, ArrayList<BSTNode> arr) {
-        if (noChildren(root)) {
-            arr.add(root);
+        // If root is not null go root, left, right order of adding nodes
+        if (root == null) {
+            return;
         }
         else {
             arr.add(root);
-            if(root.getLeft() != null) {
-                preHelper(root.getLeft(), arr);
-            }
-            if(root.getRight() != null) {
-                preHelper(root.getRight(), arr);
-            }
+            preHelper(root.getLeft(), arr);
+            preHelper(root.getRight(), arr);
         }
     }
 
@@ -129,21 +117,19 @@ public class BST {
      * @return ArrayList of BSTNodes in postorder
      */
     public ArrayList<BSTNode> getPostorder() {
-        // TODO: Complete postorder traversal
         ArrayList<BSTNode> arr = new ArrayList<>();
         postHelper(root, arr);
         return arr;
     }
 
     public  void postHelper(BSTNode root, ArrayList<BSTNode> arr) {
-        if (root.getLeft() == null) {
-            arr.add(root);
+        // If root is not null go left, right, root order of adding nodes
+        if (root == null) {
+            return;
         }
         else {
             postHelper(root.getLeft(), arr);
-            if(root.getRight() != null) {
-                postHelper(root.getRight(), arr);
-            }
+            postHelper(root.getRight(), arr);
             arr.add(root);
         }
     }
@@ -155,11 +141,20 @@ public class BST {
      * @param val The value ot insert
      */
     public void insert(int val) {
-        // TODO: Complete insert
         insertHelp(val, root);
     }
 
     public void insertHelp(int val, BSTNode root) {
+        // If the root is null then make the value the new root
+        if (root == null) {
+            root = new BSTNode(val);
+        }
+        // If the root is in the tree then just return
+        if (root.getVal() == val) {
+            return;
+        }
+        // Depending on if the val is greater or less than the root, check if the node on that side is null or not
+        // and if it is make that the value and otherwise go further down in the tree
         if (root.getVal() > val) {
             if(root.getLeft() == null) {
                 root.setLeft(new BSTNode(val));
